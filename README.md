@@ -44,18 +44,21 @@
 db.collection.count()
 ```
 
+This method counts and returns the number of results that match a query.
+
 ### DELETE
 ```
 db.collection.deleteOne({ status: "D" });
 ```
 
+Delete **the first** document that match a specified filter.
+
 ```
 db.collection.deleteMany({ status : "A" });
 ```
 
-```
-db.collection.deleteMany( {} )
-```
+Delete **all** documents that match a specified filter.
+
 
 ### EXISTS
 
