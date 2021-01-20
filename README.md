@@ -321,6 +321,8 @@ db.collection.updateMany(
 
 ### ADD TO SET
 
+The `$addToSet` operator adds a value to an array **only** if it is not present. If the array already contains the value, the `$addToSet` does nothing. It ensures that there are no duplicate items being added to the array.
+
 ```
 db.collection.updateOne(
   { _id: 1 },
@@ -328,13 +330,15 @@ db.collection.updateOne(
 );
 ``` 
 
+When multiple values are added. the method can be used with the operator `$each`. In the example below, the items "camera" and "electronic" will be added to the array in the field `tags`. It won't add "accessories" because this item already exists in the array.
+
 ```
 db.collection.updateOne(
   { _id: 2 },
   {
-addToSet: {
+    addToSet: {
       tags: {
-each: ["camera", "electronics", "accessories"]
+        each: ["camera", "electronics", "accessories"]
       }
     }
   }
@@ -343,9 +347,13 @@ each: ["camera", "electronics", "accessories"]
 
 ### POP
 
+Removes the first item of an array in the field `items`.
+
 ```
 db.collection.updateOne({ _id: 1 }, { $pop: { items: -1 } });
 ```
+
+Removes the last item of an array in the field `items`.
 
 ```
 db.collection.update({ _id: 1 }, { $pop: { items: 1 } });
