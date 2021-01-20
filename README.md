@@ -238,11 +238,15 @@ db.collection.find({ price: { $not: { $gt: 1.99 } } });
 db.collection.find({ $or: [{ qty: { $lt: 20 } }, { price: 10 }] });
 ``` 
 
+Executes a logical operator **OR** on an array of two or more query expressions, and returns the documents that satisfy *at least* one of them.
+
 ### NOR
 
 ```
 db.collection.find({ $nor: [{ price: 1.99 }, { sale: true }] });
 ``` 
+
+Executes a logical operator **NOR** on an array of two or more query expressions, and returns the documents that fail *at least* one of them.
 
 ### AND
 
@@ -255,7 +259,11 @@ db.collection.find({
 });
 ``` 
 
+Executes a logical operator **AND** on an array of two or more expressions, and returns the documents that satisfy *all* of them.
+
 ### AND OR
+
+It is possible to combine the operators to create more complex query. The expression below returns all documents in the collection that have the field `price` between 0.99 - 1.99 **AND** the field `sale` true or the field `qty`less than 20.
 
 ```
 db.collection.find({
@@ -277,51 +285,39 @@ db.collection.find({
 
 ---
 
-## Array Modifiers
+## MODIFYING DOCUMENTS
 
-### EACH
+### UPDATE ONE
 
-Modifier: **$each**
-Add multiple values into an Array
+Updates **a single document** based on the filter (the first one to match it). This method takes the following parameters:
+1. filter: the selection criteria for the update
+2. $set: The modifications that will be applied
+3. $upsert: When `true`, creates a new document if no documents match the filter. This parameter is *optional*. 
 
-### SLICE
+```
+db.collection.updateOne(
+  { item: "paper" },
+  { $set: { "size.uom": "cm", status: "P" } },
+  { $upsert: true }
+)
+```
 
-Modifier: **$slice**
-Slice the array in a specific index (Ex: slice: 2)
-  - **Must** be used with **$each**
 
-### ARRAY SORT
+### UPDATE MANY
 
-Modifier: **$sort**
-Sort items into the array.
-  - Ascending order (Ex: sort: { key: 1 })
-  - Descending order (Ex: sort: { key: -1 })
-  - **Must** be used with **$each**
+Updates **all** the documents that match the filter criteria. This method takes the same parameters as `updateOne`.
 
-### POSITION
-
-Modifier: **$position**
-Insert item into a specific index
-  - Without it the new item will be inserted at the last position in the array
-  - **Must** be used with **$each**
+```
+db.collection.updateMany(
+  { item: "paper" },
+  { $set: { "size.uom": "cm", status: "P" } },
+  { $upsert: true }
+)
+```
 
 ---
 
 ## Array Operators
-
-### FILTERS
-
-```
-db.collection.updateMany(
-  {},
-  { $set : {
-    "ingredients.$[elemento].unit": "xícara",
-    "ingredients.$[elemento].name": "Farinha Integral"
-    }
-  }, 
-  { arrayFilters: [ { "elemento.name": "Farinha" } ]}
-);
-```
 
 ### ADD TO SET
 
@@ -463,3 +459,35 @@ slice: 2
   { upsert: true }
 );
 ```
+
+---
+
+## Array Modifiers
+
+### EACH
+
+Modifier: **$each**
+Add multiple values into an Array
+
+### SLICE
+
+Modifier: **$slice**
+Slice the array in a specific index (Ex: slice: 2)
+  - **Must** be used with **$each**
+
+### ARRAY SORT
+
+Modifier: **$sort**
+Sort items into the array.
+  - Ascending order (Ex: sort: { key: 1 })
+  - Descending order (Ex: sort: { key: -1 })
+  - **Must** be used with **$each**
+
+### POSITION
+
+Modifier: **$position**
+Insert item into a specific index
+  - Without it the new item will be inserted at the last position in the array
+  - **Must** be used with **$each**
+
+---
