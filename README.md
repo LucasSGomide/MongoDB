@@ -62,17 +62,21 @@ Delete **all** documents that match a specified filter.
 
 ### EXISTS
 
-Check if an item exists.
-  - Use true to find items that exists
-  - Use false to find items that exists
+Check if a field exists in the document.
+  - Use true to find a field that exists.
+  - Use false to find a field that does not exist.
 
 ```
 db.collection.find({ qty: { $exists: true } })
 ```
 
+The query returns the documents that contain the field `qty`, including documents where the field value is `null`.
+
 ```
-db.collection.find({ qty: { $exists: true } })
+db.collection.find({ qty: { $exists: false } })
 ``` 
+
+The query returns only the documents that do not contain the field `qty`.
 
 ### FIND
 
