@@ -64,7 +64,7 @@ Delete **all** documents that match a specified filter.
 
 Check if a field exists in the document.
   - Use true to find a field that exists.
-  - Use false to find a field that does not exist.
+  - Use false to find documents in which a field does not exist.
 
 ```
 db.collection.find({ qty: { $exists: true } })
@@ -81,31 +81,22 @@ The query returns only the documents that do not contain the field `qty`.
 ### FIND
 
 ```
-db.collection.find();
+db.collection.find({});
 ``` 
+
+Selects all documents in a collection.
 
 ```
 db.collection.find({}, { name: 1 });
 ``` 
 
-```
-db.collection.find( { chave: { $gt: 4 } } );
-``` 
+The second parameter (optional) specifies the fields to return in the document.
 
 ```
-db.collection.find({
-  $and: [
-    {
-      $or: [
-        { "empresa.nome": "DELTA AIRLINES" },
-        { "empresa.nome": "AMERICAN AIRLINES" },
-      ],
-    },
-    { "aeroportoOrigem.sigla": "SBGR" },
-    { "aeroportoDestino.sigla": "KJFK" },
-  ],
-}, { _id: 0, vooId: 1 }).limit(1);
+db.collection.find({ releaseYear: "2021" }, { title: 1, author: 1, _id: 0 });
 ``` 
+
+Returns all documents that match the query, and display only the `title` and `author`.
 
 ### INSERT
 
@@ -113,13 +104,19 @@ db.collection.find({
 db.createCollection( "minhaColecao4", { collation: { locale: "fr" } } );
 ```
 
+Create a new collection.
+
 ```
 db.collection.insertOne({ chave: "Valor", chave2: "Valor2" });
 ``` 
 
+Insert only one document in the collection. If the collection doesn't exist, mongodb automatically create it.
+
 ```
 db.collection.insertMany([ { chave: "Valor", chave2: "Valor2" }, { chave: "Valor", chave2: "Valor2" } ]);
 ```
+
+Insert more than one documents in a collection.
 
 ### LIMIT
 
@@ -127,23 +124,31 @@ db.collection.insertMany([ { chave: "Valor", chave2: "Valor2" }, { chave: "Valor
 db.collection.find("<query>").limit("<número>");
 ```
 
+Specify the number of documents to be returned.
+
 ```
 db.collection.find().skip(2); 
 ```
 
+Specify the number of documents to be skipped. It control from where mongodb will begin to return results.
+
 ```
-db.collection.find().limit(10).skip(5);
+db.collection.find({}).limit(10).skip(5);
 ``` 
+
+Return ten results, skipping the first five documents, from the collection.
 
 ### SORT
 
-Sort items.
+Sort items, numerically or alphabetically.
   - Ascending order (Ex: sort: { key: 1 })
   - Descending order (Ex: sort: { key: -1 })
 
 ```
-db.collection.find().sort({ "price": 1 })
+db.collection.find({}).sort({ "price": 1 })
 ``` 
+
+Sort the field `price` in ascending order for all documents in a collection. 
 
 ---
 
@@ -153,6 +158,7 @@ db.collection.find().sort({ "price": 1 })
 ```
 db.collection.find({ qty: { $lt: 20 } });
 ``` 
+Returns all documents in which the field `qty` is less than 20.
 
 ### LESS THAN OR EQUAL TO
 
@@ -160,17 +166,24 @@ db.collection.find({ qty: { $lt: 20 } });
 db.collection.find({ qty: { $lte: 20 } });
 ``` 
 
+Returns all documents in which the field `qty` is less than or equal 20.
+
 ### GREATER THAN
 
 ```
 db.collection.find({ qty: { $gt: 20 } });
 ``` 
 
+Returns all documents in which the field `qty` is greater than 20.
+
 ### GREATER THAN OR EQUAL TO
 
 ```
 db.collection.find({ qty: { $gte: 20 } });
 ``` 
+
+Returns all documents in which the field `qty` is greater than or equal 20.
+
 
 ### EQUAL TO
 
@@ -179,11 +192,17 @@ db.collection.find({ qty: { $eq: 20 } });
 db.collection.find({ qty: 20 });
 ``` 
 
+Returns all documents in which the field `qty` is equal to 20.
+
+
 ### NOT EQUAL TO
 
 ```
 db.collection.find({ qty: { $ne: 20 } });
 ```
+
+Returns all documents in which the field `qty` is not equal to 20.
+
 
 ### IN
 
@@ -191,11 +210,17 @@ db.collection.find({ qty: { $ne: 20 } });
 db.collection.find({ qty: { $in: [ 5, 15 ] } });
 ```
 
+Returns all documents in which the field `qty` is equal to 5 **or** 15.
+
+
 ### NOT IN
 
 ```
 db.collection.find({ qty: { $in: [ 5, 15 ] } });
 ```
+
+Returns all documents in which the field `qty` is not equal to 5 **neither** 15. It also returns documents in which the field `qty` does not exist.
+
 
 ---
 
