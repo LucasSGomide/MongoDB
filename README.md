@@ -456,7 +456,7 @@ db.inventory.find(
 
 ### $ELEMMATCH
 
-Select documents that contain an array field with at least one element that matches all the specified.
+Select documents that contain an array field with at least one element that matches all the specified filters.
 
 ``` javascript
 db.scores.find(
@@ -466,7 +466,7 @@ db.scores.find(
 
 ### $SIZE
 
-Select matches any array with the number of elements specified by the argument.
+Select documents that match any array with the number of elements specified by the argument.
 
 ``` javascript
 db.products.find(
@@ -488,7 +488,7 @@ If you must create custom expressions, $function is preferred over **$where**.
 
 ### $EXPR
 
-Allows the use of [aggregation](#aggregation) expressions.
+Allows the use of [aggregation](#aggregation) expressions. It compares fields from **the same** document.
 
 ``` javascript
 db.monthlyBudget.find(
