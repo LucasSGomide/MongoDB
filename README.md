@@ -330,6 +330,89 @@ db.collection.updateMany(
 )
 ```
 
+### MUL
+
+Multiply the value of a field by a number, updating the document. If the field does not exist, $mul creates it and sets the value to zero.
+
+```javascript
+db.collection.updateOne(
+   { _id: 1 },
+   { $mul: { price: NumberDecimal("1.25"), qty: 2 } }
+)
+```
+
+### INC
+Increments (positive number) or decrements (negative number) a field by a specified value. If the field does not exist, $inc creates the field and sets the field to the specified value.
+
+```javascript
+db.collection.updateOne(
+  { sku: "abc123" },
+  { $inc: { quantity: -2, orders: 10 } }
+);
+```
+
+### MAX
+The $max sets the upper limit of a field. It compares the specified value with the field's value. If the current value is lower than the specified value, the document will be updated. Otherwise the field's value won't be changed.
+
+```javascript
+db.collection.update({ _id: 1 }, { $max: { highScore: 950 } });
+```
+In the example above, if the current value is lower than 950 the $max will update the `highScore` field to 950. If it is already higher than 950, nothing will happen.
+
+### MIN
+The $min sets the lower limit of a field. It compares the specified value with the field's value. If the current value is greater than the specified value, the document will be updated. Otherwise the field's value won't be changed.
+
+```javascript
+db.collection.update({ _id: 1 }, { $min: { lowScore: 150 } });
+```
+In the example above, if the current value is higher than 150 the $min will update the `lowScore` field to 150. If it is already lower than 150, nothing will happen.
+
+### RENAME
+Update the name of a field.
+
+```javascript
+db.collection.updateMany([
+  {},
+  { $rename: {
+      "name": "productName"
+    }
+  }
+]
+);
+```
+In the example above, $rename will update the `name` field to `productName` in all documents.
+
+### UNSET
+Remove one or more fields.
+
+```javascript
+db.collection.updateMany(
+  { productName: "Banana" },
+  { $unset: { quantity: "" } }
+);
+```
+In the example above, $unset deletes the field `quantity` in the documents with `productName: "Banana"`.
+
+### CURRENT DATE
+Set the value of a field to the current date, either as a Date or a timestamp. 
+
+```javascript
+db.customers.updateOne(
+   { _id: 1 },
+   {
+     $currentDate: {
+        lastModified: true,
+        "cancellation.date": { $type: "timestamp" }
+     },
+     $set: {
+        "cancellation.reason": "user request",
+        status: "D"
+     }
+   }
+)
+```
+The example above updates the lastModified field to the current date, the "cancellation.date" field to the current timestamp as well as updating the status field to "D" and the "cancellation.reason" to "user request".
+
 ---
 
 ## Array Operators
