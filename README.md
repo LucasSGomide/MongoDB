@@ -23,20 +23,23 @@
   * [NOR](#nor)
   * [AND](#and)
   * [AND OR](#and-or)
-* [**Array Modifiers**](#array-modifiers)
-  * [EACH](#each)
-  * [SLICE](#slice)
-  * [ARRAY SORT](#array-sort)
-  * [POSITION](#position)
+* [**Modifying Documents**](#modifying-documents)
+  * [UPDATE ONE](#update-one)
+  * [UPDATE MANY](#update-many)
 * [**Array Operators**](#array-operators)
   * [$ADD TO SET](#add-to-set)
-  * [$FILTERS](#filters)
+  * [$ARRAY FILTERS](#array-filters)
   * [$POP](#pop)
   * [$PULL](#pull)
   * [$PUSH](#push)
   * [$ALL](#all)
   * [$ELEMMATCH](#elemmatch)
   * [$SIZE](#size)
+* [**Array Modifiers**](#array-modifiers)
+  * [EACH](#each)
+  * [SLICE](#slice)
+  * [ARRAY SORT](#array-sort)
+  * [POSITION](#position)
 * [**Evaluation Operators**](#evaluation-operators)
   * [$WHERE](#where)
   * [$EXPR](#expr)
@@ -52,7 +55,7 @@
 ### COUNT
 
 ```javascript
-db.collection.count()
+db.collection.count();
 ```
 
 This method counts and returns the number of results that match a query.
@@ -72,7 +75,7 @@ db.collection.deleteMany({ status : "A" });
 Delete **all** documents that match a specified filter.
 
 ``` javascript
-db.collection.deleteMany( {} )
+db.collection.deleteMany( {} );
 ```
 
 ### EXISTS
@@ -82,12 +85,12 @@ Check if a field exists in the document.
   - Use false to find documents in which a field does not exist.
 
 ``` javascript
-db.collection.find({ qty: { $exists: true } })
+db.collection.find({ qty: { $exists: true } });
 ```
 The query returns the documents that contain the field `qty`, including documents where the field value is `null`.
 
 ``` javascript
-db.collection.find({ qty: { $exists: false } })
+db.collection.find({ qty: { $exists: false } });
 ``` 
 The query returns only the documents that do not contain the field `qty`.
 
@@ -157,7 +160,7 @@ Sort items, numerically or alphabetically.
   - Descending order (Ex: sort: { key: -1 })
 
 ```javascript
-db.collection.find({}).sort({ "price": 1 })
+db.collection.find({}).sort({ "price": 1 });
 ``` 
 
 Sort the field `price` in ascending order for all documents in a collection. 
@@ -306,7 +309,7 @@ Updates **a single document** based on the filter (the first one to match it). T
 2. $set: The modifications that will be applied
 3. $upsert: When `true`, creates a new document if no documents match the filter. This parameter is *optional*. 
 
-```
+```javascript
 db.collection.updateOne(
   { item: "paper" },
   { $set: { "size.uom": "cm", status: "P" } },
@@ -319,7 +322,7 @@ db.collection.updateOne(
 
 Updates **all** the documents that match the filter criteria. This method takes the same parameters as `updateOne`.
 
-```
+```javascript
 db.collection.updateMany(
   { item: "paper" },
   { $set: { "size.uom": "cm", status: "P" } },
@@ -356,7 +359,7 @@ db.collection.updateOne(
 );
 ```
 
-### FILTERS
+### ARRAY FILTERS
 
 ``` javascript
 db.collection.updateMany(
@@ -408,7 +411,7 @@ pull: {
 );
 ```
 
-```
+``` javascript
 db.collection.updateMany(
   {},
   {
@@ -433,7 +436,7 @@ db.collection.updateOne(
       },
     } 
   },
-  { upsert: true }
+  { $upsert: true }
 );
 ```
 
@@ -456,7 +459,6 @@ db.collection.updateOne(
       ] }
     }
   },
-  { upsert: false }
 );
 ```
 
@@ -465,7 +467,7 @@ db.collection.updateOne(
   { _id: 1},
   { $push: {
       items: { 
-each: [
+$each: [
           {
             "name" : "notepad",
             "price" : 35.29,
@@ -482,8 +484,8 @@ each: [
             "quantity": 5
           }
       ],
-sort: { quantity: -1 },
-slice: 2
+$sort: { quantity: -1 },
+$slice: 2
     }
     }
   },
