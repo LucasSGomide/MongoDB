@@ -130,7 +130,7 @@ Specify the number of documents to be returned.
 db.collection.find().skip(2); 
 ```
 
-Specify the number of documents to be skipped. It control from where mongodb will begin to return results.
+Specify the number of documents to be skipped. It controls where mongodb will begin to return results.
 
 ```
 db.collection.find({}).limit(10).skip(5);
