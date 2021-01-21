@@ -116,7 +116,7 @@ Insert only one document in the collection. If the collection doesn't exist, mon
 db.collection.insertMany([ { chave: "Valor", chave2: "Valor2" }, { chave: "Valor", chave2: "Valor2" } ]);
 ```
 
-Insert more than one documents in a collection.
+Insert more than one document in a collection.
 
 ### LIMIT
 
