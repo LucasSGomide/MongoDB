@@ -110,7 +110,7 @@ Create a new collection.
 db.collection.insertOne({ chave: "Valor", chave2: "Valor2" });
 ``` 
 
-Insert only one document in the collection. If the collection doesn't exist, mongodb automatically create it.
+Insert only one document in the collection. If the collection doesn't exist, mongodb automatically creates it.
 
 ```
 db.collection.insertMany([ { chave: "Valor", chave2: "Valor2" }, { chave: "Valor", chave2: "Valor2" } ]);
