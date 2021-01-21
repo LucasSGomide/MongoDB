@@ -440,24 +440,103 @@ slice: 2
 
 ### $ALL
 
+Selects the documents where the value of a field is an array that contains all the specified elements.
 
+``` javascript
+db.inventory.find(
+  { tags: { $all: ["red", "blank"] } }
+);
+```
 
 ### $ELEMMATCH
 
+Select documents that contain an array field with at least one element that matches all the specified.
 
+``` javascript
+db.scores.find(
+  { results: { $elemMatch: { $gte: 80, $lt: 85 } } }
+);
+```
 
 ### $SIZE
 
+Select matches any array with the number of elements specified by the argument.
 
+``` javascript
+db.products.find(
+  { tags: { $size: 2 } }
+);
+```
 
 ---
 
 ## Evaluation Operators
 
+### $WHERE
+
+Use to pass either a string containing a JavaScript expression or a full JavaScript function.
+
+Starting in MongoDB 3.6, the **$expr** operator allows the use of aggregation expressions.
+
+If you must create custom expressions, $function is preferred over **$where**.
+
 ### $EXPR
+
+Allows the use of [aggregation](#aggregation) expressions.
+
+``` javascript
+db.monthlyBudget.find(
+  {
+expr: { $gt: [ "$spent", "$budget" ] }
+  }
+);
+```
 
 ### $REGEX
 
+Provides regular expression capabilities for pattern matching strings.
+
+``` javascript
+db.products.find({ sku: { $regex: /789$/ } });
+```
+
+``` javascript
+db.products.find({ sku: { $regex: /^ABC/i } });
+```
+
 ### $TEXT
 
+Performs a text search on the content of the fields indexed with a text index.
+
+
+```javascript
+{
+  text:
+  {
+    search: <string>,
+    language: <string>,
+    caseSensitive: <boolean>,
+    diacriticSensitive: <boolean>
+  }
+}
+```
+
+`$search`: string of terms that MongoDB parses and uses to query the text index;
+
+`$language`: determines the list of stop words for the search and the rules for the tokenizer;
+
+`$caseSensitive`: boolean flag to enable or disable case sensitive search. Defaults to **false**;
+
+`$diacriticSensitive`: boolean flag to enable or disable diacritic sensitive. Defaults to **false**
+
 ### $MOD
+
+Select documents where the value of a field divided by a divisor has the specified remainder.
+
+```javascript
+db.inventory.find({ qty: { $mod: [4, 0] } });
+```
+
+## Aggregation
+
+Aggregation expressions use **field path** to access fields in the input documents. To specify a field path, prefix the field name with a dollar sign $.
