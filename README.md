@@ -34,6 +34,9 @@
   * [$POP](#pop)
   * [$PULL](#pull)
   * [$PUSH](#push)
+  * [$ALL](#all)
+  * [$ELEMMATCH](#elemmatch)
+  * [$SIZE](#size)
 
 
 ---
@@ -41,20 +44,22 @@
 ## Filter Operators
 
 ### COUNT
-```
+
+```javascript
 db.collection.count()
 ```
 
 ### DELETE
-```
+
+``` javascript
 db.collection.deleteOne({ status: "D" });
 ```
 
-```
+``` javascript
 db.collection.deleteMany({ status : "A" });
 ```
 
-```
+``` javascript
 db.collection.deleteMany( {} )
 ```
 
@@ -64,29 +69,29 @@ Check if an item exists.
   - Use true to find items that exists
   - Use false to find items that exists
 
-```
+``` javascript
 db.collection.find({ qty: { $exists: true } })
 ```
 
-```
+``` javascript
 db.collection.find({ qty: { $exists: true } })
 ``` 
 
 ### FIND
 
-```
+``` javascript
 db.collection.find();
 ``` 
 
-```
+``` javascript
 db.collection.find({}, { name: 1 });
 ``` 
 
-```
+``` javascript
 db.collection.find( { chave: { $gt: 4 } } );
 ``` 
 
-```
+``` javascript
 db.collection.find({
   $and: [
     {
@@ -103,29 +108,29 @@ db.collection.find({
 
 ### INSERT
 
-```
+``` javascript
 db.createCollection( "minhaColecao4", { collation: { locale: "fr" } } );
 ```
 
-```
+``` javascript
 db.collection.insertOne({ chave: "Valor", chave2: "Valor2" });
 ``` 
 
-```
+``` javascript
 db.collection.insertMany([ { chave: "Valor", chave2: "Valor2" }, { chave: "Valor", chave2: "Valor2" } ]);
 ```
 
 ### LIMIT
 
-```
+``` javascript
 db.collection.find("<query>").limit("<número>");
 ```
 
-```
+``` javascript
 db.collection.find().skip(2); 
 ```
 
-```
+``` javascript
 db.collection.find().limit(10).skip(5);
 ``` 
 
@@ -135,7 +140,7 @@ Sort items.
   - Ascending order (Ex: sort: { key: 1 })
   - Descending order (Ex: sort: { key: -1 })
 
-```
+``` javascript
 db.collection.find().sort({ "price": 1 })
 ``` 
 
@@ -144,50 +149,50 @@ db.collection.find().sort({ "price": 1 })
 ## Comparison Operators
 
 ### LESS THAN
-```
+``` javascript
 db.collection.find({ qty: { $lt: 20 } });
 ``` 
 
 ### LESS THAN OR EQUAL TO
 
-```
+``` javascript
 db.collection.find({ qty: { $lte: 20 } });
 ``` 
 
 ### GREATER THAN
 
-```
+``` javascript
 db.collection.find({ qty: { $gt: 20 } });
 ``` 
 
 ### GREATER THAN OR EQUAL TO
 
-```
+``` javascript
 db.collection.find({ qty: { $gte: 20 } });
 ``` 
 
 ### EQUAL TO
 
-```
+``` javascript
 db.collection.find({ qty: { $eq: 20 } });
 db.collection.find({ qty: 20 });
 ``` 
 
 ### NOT EQUAL TO
 
-```
+``` javascript
 db.collection.find({ qty: { $ne: 20 } });
 ```
 
 ### IN
 
-```
+``` javascript
 db.collection.find({ qty: { $in: [ 5, 15 ] } });
 ```
 
 ### NOT IN
 
-```
+``` javascript
 db.collection.find({ qty: { $in: [ 5, 15 ] } });
 ```
 
@@ -197,25 +202,25 @@ db.collection.find({ qty: { $in: [ 5, 15 ] } });
 
 ### NOT
 
-```
+``` javascript
 db.collection.find({ price: { $not: { $gt: 1.99 } } });
 ``` 
 
 ### OR
 
-```
+``` javascript
 db.collection.find({ $or: [{ qty: { $lt: 20 } }, { price: 10 }] });
 ``` 
 
 ### NOR
 
-```
+```javascript
 db.collection.find({ $nor: [{ price: 1.99 }, { sale: true }] });
 ``` 
 
 ### AND
 
-```
+``` javascript
 db.collection.find({
   $and: [
     { price: { $ne: 1.99 } },
@@ -226,7 +231,7 @@ db.collection.find({
 
 ### AND OR
 
-```
+``` javascript
 db.collection.find({
   $and: [
     {
@@ -280,7 +285,7 @@ Insert item into a specific index
 
 ### FILTERS
 
-```
+``` javascript
 db.collection.updateMany(
   {},
   { $set : {
@@ -294,14 +299,14 @@ db.collection.updateMany(
 
 ### ADD TO SET
 
-```
+``` javascript
 db.collection.updateOne(
   { _id: 1 },
   { $addToSet: { tags: "accessories" } }
 );
 ``` 
 
-```
+``` javascript
 db.collection.updateOne(
   { _id: 2 },
   {
@@ -316,17 +321,17 @@ each: ["camera", "electronics", "accessories"]
 
 ### POP
 
-```
+``` javascript
 db.collection.updateOne({ _id: 1 }, { $pop: { items: -1 } });
 ```
 
-```
+``` javascript
 db.collection.update({ _id: 1 }, { $pop: { items: 1 } });
 ```
 
 ### PULL
 
-```
+```javascript
 db.collection.updateMany(
   {},
   {
@@ -339,7 +344,7 @@ pull: {
 );
 ```
 
-```
+``` javascript
 db.collection.updateOne(
   { _id: 1 },
   {
@@ -363,7 +368,7 @@ pull: {
 
 ### PUSH
 
-```
+``` javascript
 db.collection.updateOne(
   {_id: 1 },
   { $push:
@@ -379,7 +384,7 @@ db.collection.updateOne(
 );
 ```
 
-```
+``` javascript
 db.collection.updateOne(
   {},
   { $push: {
@@ -402,7 +407,7 @@ db.collection.updateOne(
 );
 ```
 
-```
+``` javascript
 db.collection.updateOne(
   { _id: 1},
   { $push: {
@@ -432,3 +437,27 @@ slice: 2
   { upsert: true }
 );
 ```
+
+### $ALL
+
+
+
+### $ELEMMATCH
+
+
+
+### $SIZE
+
+
+
+---
+
+## Evaluation Operators
+
+### $EXPR
+
+### $REGEX
+
+### $TEXT
+
+### $MOD
