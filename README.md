@@ -37,7 +37,13 @@
   * [$ALL](#all)
   * [$ELEMMATCH](#elemmatch)
   * [$SIZE](#size)
-
+* [**Evaluation Operators**](#evaluation-operators)
+  * [$WHERE](#where)
+  * [$EXPR](#expr)
+  * [$REGEX](#regex)
+  * [$TEXT](#text)
+  * [$MOD](#mod)
+* [**Aggregation**](#aggregation)
 
 ---
 
