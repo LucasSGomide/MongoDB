@@ -91,26 +91,26 @@ The query returns the documents that contain the field `qty`, including document
 
 ``` javascript
 db.collection.find({ qty: { $exists: false } });
-``` 
+```
 The query returns only the documents that do not contain the field `qty`.
 
 ### FIND
 
 ```javascript
 db.collection.find({});
-``` 
+```
 
 Selects all documents in a collection.
 
 ```javascript
 db.collection.find({}, { name: 1 });
-``` 
+```
 
 The second parameter (optional) specifies the fields to return in the document.
 
 ```javascript
 db.collection.find({ releaseYear: "2021" }, { title: 1, author: 1, _id: 0 });
-``` 
+```
 
 Returns all documents that match the query, and display only the `title` and `author`.
 
@@ -124,7 +124,7 @@ Create a new collection.
 
 ```javascript
 db.collection.insertOne({ chave: "Valor", chave2: "Valor2" });
-``` 
+```
 
 Insert only one document in the collection. If the collection doesn't exist, mongodb automatically creates it.
 
@@ -149,7 +149,7 @@ Specify the number of documents to be skipped. It controls where mongodb will be
 
 ```javascript
 db.collection.find({}).limit(10).skip(5);
-``` 
+```
 
 Return ten results, skipping the first five documents, from the collection.
 
@@ -161,7 +161,7 @@ Sort items, numerically or alphabetically.
 
 ```javascript
 db.collection.find({}).sort({ "price": 1 });
-``` 
+```
 
 Sort the field `price` in ascending order for all documents in a collection. 
 
@@ -172,14 +172,14 @@ Sort the field `price` in ascending order for all documents in a collection.
 ### LESS THAN
 ``` javascript
 db.collection.find({ qty: { $lt: 20 } });
-``` 
+```
 Returns all documents in which the field `qty` is less than 20.
 
 ### LESS THAN OR EQUAL TO
 
 ``` javascript
 db.collection.find({ qty: { $lte: 20 } });
-``` 
+```
 
 Returns all documents in which the field `qty` is less than or equal 20.
 
@@ -187,7 +187,7 @@ Returns all documents in which the field `qty` is less than or equal 20.
 
 ``` javascript
 db.collection.find({ qty: { $gt: 20 } });
-``` 
+```
 
 Returns all documents in which the field `qty` is greater than 20.
 
@@ -195,7 +195,7 @@ Returns all documents in which the field `qty` is greater than 20.
 
 ``` javascript
 db.collection.find({ qty: { $gte: 20 } });
-``` 
+```
 
 Returns all documents in which the field `qty` is greater than or equal 20.
 
@@ -205,7 +205,7 @@ Returns all documents in which the field `qty` is greater than or equal 20.
 ``` javascript
 db.collection.find({ qty: { $eq: 20 } });
 db.collection.find({ qty: 20 });
-``` 
+```
 
 Returns all documents in which the field `qty` is equal to 20.
 
@@ -245,13 +245,13 @@ Returns all documents in which the field `qty` is not equal to 5 **neither** 15.
 
 ``` javascript
 db.collection.find({ price: { $not: { $gt: 1.99 } } });
-``` 
+```
 
 ### OR
 
 ``` javascript
 db.collection.find({ $or: [{ qty: { $lt: 20 } }, { price: 10 }] });
-``` 
+```
 
 Executes a logical operator **OR** on an array of two or more query expressions, and returns the documents that satisfy *at least* one of them.
 
@@ -259,7 +259,7 @@ Executes a logical operator **OR** on an array of two or more query expressions,
 
 ```javascript
 db.collection.find({ $nor: [{ price: 1.99 }, { sale: true }] });
-``` 
+```
 
 Executes a logical operator **NOR** on an array of two or more query expressions, and returns the documents that fail *at least* one of them.
 
@@ -272,7 +272,7 @@ db.collection.find({
     { price: { $exists: true } }
   ]
 });
-``` 
+```
 
 Executes a logical operator **AND** on an array of two or more expressions, and returns the documents that satisfy *all* of them.
 
@@ -296,7 +296,7 @@ db.collection.find({
     }
   ]
 });
-``` 
+```
 
 ---
 
@@ -426,7 +426,7 @@ db.collection.updateOne(
   { _id: 1 },
   { $addToSet: { tags: "accessories" } }
 );
-``` 
+```
 When multiple values are added. the method can be used with the operator `$each`. In the example below, the items "camera" and "electronic" will be added to the array in the field `tags`. It won't add "accessories" because this item already exists in the array.
 
 ```javascript
@@ -604,7 +604,7 @@ Modifier: **$position**
 Insert item into a specific index
   - Without it the new item will be inserted at the last position in the array
   - **Must** be used with **$each**
-  
+
 ---
 
 ### $ALL
@@ -709,3 +709,219 @@ db.inventory.find({ qty: { $mod: [4, 0] } });
 ## Aggregation
 
 Aggregation expressions use **field path** to access fields in the input documents. To specify a field path, prefix the field name with a dollar sign $.
+
+
+
+# Aggregation Pipeline
+
+The aggregation pipeline is a framework for MongoDB. Documents enter a multi-stage pipeline that transforms the documents into an aggregated result. Each stage transforms the documents as they pass from one stage to another. 
+
+## Aggregation Operators
+
+### $match
+
+````javascript
+db.collection.aggregate([
+    { $match: { <query> } },
+]);
+````
+
+Filters the documents so only those that match the specified condition(s) may enter the next stage. It resembles the filters from **find()** method.
+
+```javascript
+db.collection.aggregate([
+    { $match: { name: "Alex" } },
+]);
+```
+
+```javascript
+db.collection.find({ name: "Alex" });
+```
+
+Select all documents that match the query.
+
+This operator may be used at any stage of the pipeline. When used as the first stage, it should improve considerably the performace of your query. In the other hand, when used at any other point, it will act similar to a **HAVING** from the SQL.
+
+---
+
+### $limit
+
+```` javascript
+db.collection.aggregate([
+    { $limit: <positive integer> },
+]);
+````
+
+Limits the number of documents passed to the next stage in the pipeline.
+
+````javasc
+db.collection.aggregate([
+	{ $match: { price: 10 } },
+    { $limit: 5 },
+]);
+````
+
+Returns five results that matches the specified condition from the previous stage.
+
+---
+
+### $lookup
+
+This operator allows the use of documents from another collection (table), similar to a **JOIN** from the SQL. The documents from the joined collection will be avaible through a new array.
+
+There are two types of `$lookup`:
+
+#### Equality Match
+
+````javascript
+db.collection.aggregate([
+	{
+        $lookup:
+        {
+          from: <collection to join>,
+       	  localField: <field from the input documents>,
+       	  foreignField: <field from the documents of the "from" collection>,
+       	  as: <output array field>
+        },
+    },
+]);
+````
+
+````javascript
+db.collection.aggregate([
+	{
+        $lookup:
+        {
+          from: <inventory>,
+       	  localField: <item>,
+       	  foreignField: <sku>,
+       	  as: <inventory_docs>
+        },
+    },
+]);
+````
+
+----
+
+### $group
+
+This operator groups documents by the specified `_id` expression. It's worth mentioning that the specified `_id` is actually a "parameter" of `$group` and is not to be mistaken with `_id` from the collections.
+
+````javas
+db.collection.aggregate([
+	{
+		$group:
+		{
+			_id: <expression>,
+			<field1>: { <accumulator1> : <expression1> },
+			...
+			<fieldN>: { <accumulatorN> : <expressionN> },
+		},
+	},
+]);
+````
+
+The `<field>` may be named as you see fit, howerver, the `<accumulator>` must be a accumulator operator.
+
+````javas
+db.collection.aggregate([
+  {
+    $group : {
+      _id : "$itemId",
+      count: { $sum: 1},
+    }
+  }
+]);
+````
+
+The output would be something like this:
+
+````bash
+{ _id : "Chair", count : 3 }
+{ _id : "Table", count : 2 }
+{ _id : "Lamp", count : 2 }
+````
+
+**OBS:** If you set `_id` as `null`, you will group all documents.
+
+#### List of most used accumulators:
+
+- $addToSet
+- $avg
+- $first
+- $last
+- $max
+- $sum
+
+---
+
+### $unwind
+
+````javascript
+db.collection.aggregate([
+    { $unwind: <field path> },
+]);
+````
+
+This operator desconstructs an array field into documents. To be more precisely, a document for each element of the array.
+
+Let's take the following document as an example:
+
+````javascript
+{
+    _id: 7,
+    name: "GMusicApp",
+    subscription: ["free", "premium", "family", "university"]
+}
+````
+
+If we were to apply the `$unwind` operator:
+
+````javascript
+db.collection.aggregate([
+    { $unwind: "$subscription" },
+]);
+````
+
+We would get following output:
+
+````javascript
+{ _id: 7, name: "GMusicApp", subscription: "free" },
+{ _id: 7, name: "GMusicApp", subscription: "premium" },
+{ _id: 7, name: "GMusicApp", subscription: "family" },
+{ _id: 7, name: "GMusicApp", subscription: "university" },
+````
+
+---
+
+### $project
+
+````javascript
+db.collection.aggregate([
+    {
+        project: {
+            <specification(s)>
+        },
+    },
+]);
+````
+
+Simple speaking,  this operator is similar to the 2nd parameter of `.find()`. It allows you to manipulate the output, passing along documents with only the specified fields. Those fields can be either from the input documents or newly computed ones.
+
+````javascript
+db.collection.aggregate([
+    {
+        $project: {
+            _id: 0, // or false
+            productName: "$name",
+            quantity: 1, // or true
+            profit: {
+                $subtract: ["$sale_price", "$cost_price"]
+            },
+        },
+    },
+]);
+````
+
+
+
