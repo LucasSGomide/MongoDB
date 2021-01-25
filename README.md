@@ -765,7 +765,7 @@ Returns five results that matches the specified condition from the previous stag
 
 ---
 
-### $lookup
+### $LOOKUP
 
 This operator allows the use of documents from another collection (table), similar to a **JOIN** from the SQL. The documents from the joined collection will be avaible through a new array.
 
