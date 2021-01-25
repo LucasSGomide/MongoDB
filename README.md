@@ -754,7 +754,7 @@ db.collection.aggregate([
 
 Limits the number of documents passed to the next stage in the pipeline.
 
-````javasc
+````javascript
 db.collection.aggregate([
 	{ $match: { price: 10 } },
     { $limit: 5 },
@@ -922,4 +922,3 @@ db.collection.aggregate([
     },
 ]);
 ````
-
