@@ -807,7 +807,7 @@ db.collection.aggregate([
 
 This operator groups documents by the specified `_id` expression. It's worth mentioning that the specified `_id` is actually a "parameter" of `$group` and is not to be mistaken with `_id` from the collections.
 
-````javas
+````javascript
 db.collection.aggregate([
 	{
 		$group:
