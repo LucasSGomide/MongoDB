@@ -744,7 +744,7 @@ This operator may be used at any stage of the pipeline. When used as the first s
 
 ---
 
-### $limit
+### $LIMIT
 
 ```` javascript
 db.collection.aggregate([
@@ -922,5 +922,4 @@ db.collection.aggregate([
     },
 ]);
 ````
-
 
