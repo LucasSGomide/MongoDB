@@ -718,7 +718,7 @@ The aggregation pipeline is a framework for MongoDB. Documents enter a multi-sta
 
 ## Aggregation Operators
 
-### $match
+### $MATCH
 
 ````javascript
 db.collection.aggregate([
@@ -922,6 +922,5 @@ db.collection.aggregate([
     },
 ]);
 ````
-
 
 
