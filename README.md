@@ -855,7 +855,7 @@ The output would be something like this:
 
 ---
 
-### $unwind
+### $UNWIND
 
 ````javascript
 db.collection.aggregate([
