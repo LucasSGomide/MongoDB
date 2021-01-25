@@ -894,7 +894,7 @@ We would get following output:
 
 ---
 
-### $project
+### $PROJECT
 
 ````javascript
 db.collection.aggregate([
