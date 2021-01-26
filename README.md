@@ -761,7 +761,7 @@ db.collection.aggregate([
 ]);
 ````
 
-Returns five results that matches the specified condition from the previous stage.
+Returns the first five results that matches the specified condition from the previous stage.
 
 ---
 
