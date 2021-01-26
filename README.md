@@ -842,7 +842,6 @@ The output would be something like this:
 { _id : "Lamp", count : 2 }
 ````
 
-**OBS:** If you set `_id` as `null`, you will group all documents.
 
 #### List of most used accumulators:
 
