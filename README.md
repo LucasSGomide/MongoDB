@@ -805,7 +805,7 @@ db.collection.aggregate([
 
 ### $GROUP
 
-This operator groups documents by the specified `_id` expression. It's worth mentioning that the specified `_id` is actually a "parameter" of `$group` and is not to be mistaken with `_id` from the collections.
+This operator groups documents by the specified `_id` expression. It's worth mentioning that the specified `_id` is actually a "parameter" of `$group` and is not to be mistaken with `_id` from the collections. The operator `_id` is required. If you specify a value of `null` the $group stage calculates accumulated values for the input document as a whole.
 
 ````javascript
 db.collection.aggregate([
