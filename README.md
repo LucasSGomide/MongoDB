@@ -874,7 +874,7 @@ Let's take the following document as an example:
 }
 ````
 
-If we were to apply the `$unwind` operator:
+If we apply the `$unwind` operator:
 
 ````javascript
 db.collection.aggregate([
