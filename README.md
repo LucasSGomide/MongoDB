@@ -752,7 +752,7 @@ db.collection.aggregate([
 ]);
 ````
 
-Limits the number of documents passed to the next stage in the pipeline.
+Passes only the first n documents to the next stage in the pipeline, in which n is the specified positive integer.
 
 ````javascript
 db.collection.aggregate([
