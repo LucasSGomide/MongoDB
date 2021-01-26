@@ -821,7 +821,7 @@ db.collection.aggregate([
 ]);
 ````
 
-The `<field>` may be named as you see fit, howerver, the `<accumulator>` must be a accumulator operator.
+The `<field>` may be named as you see fit, however, the `<accumulator>` must be an accumulator operator.
 
 ````javascript
 db.collection.aggregate([
