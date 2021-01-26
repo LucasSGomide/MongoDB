@@ -714,7 +714,7 @@ Aggregation expressions use **field path** to access fields in the input documen
 
 # Aggregation Pipeline
 
-The aggregation pipeline is a framework for MongoDB. Documents enter a multi-stage pipeline that transforms the documents into an aggregated result. Each stage transforms the documents as they pass from one stage to another. 
+The aggregation pipeline is a framework for MongoDB. Documents enter a multi-stage pipeline that transforms the documents into an aggregated result. Documents pass through the stages in sequence. Each stage transforms the documents as they pass from one stage to another. 
 
 ## Aggregation Operators
 
