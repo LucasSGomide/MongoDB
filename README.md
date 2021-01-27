@@ -71,7 +71,7 @@
   * [$SUBTRACT](#subtract)
   * [$CEIL](#ceil)
   * [$FLOOR](#floor)
-  * [$DEVIDE](#devide)
+  * [$DIVIDE](#divide)
   * [$MULTIPLY](#multiply)
 
 ---
