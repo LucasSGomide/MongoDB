@@ -243,6 +243,7 @@ db.collection.find({ qty: { $lt: 20 } });
 Returns all documents in which the field `qty` is less than 20.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/lt/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/lt/)
 
 ---
@@ -256,6 +257,7 @@ db.collection.find({ qty: { $lte: 20 } });
 Returns all documents in which the field `qty` is less than or equal 20.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/lte/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/lte/)
 
 ---
@@ -269,6 +271,7 @@ db.collection.find({ qty: { $gt: 20 } });
 Returns all documents in which the field `qty` is greater than 20.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/gt/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/gt/)
 
 ---
@@ -282,6 +285,7 @@ db.collection.find({ qty: { $gte: 20 } });
 Returns all documents in which the field `qty` is greater than or equal 20.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/gte/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/gte/)
 
 ---
@@ -296,6 +300,7 @@ db.collection.find({ qty: 20 });
 Returns all documents in which the field `qty` is equal to 20.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/eq/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/eq/)
 
 ---
@@ -309,6 +314,7 @@ db.collection.find({ qty: { $ne: 20 } });
 Returns all documents in which the field `qty` is not equal to 20.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/ne/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/ne/)
 
 ---
@@ -322,6 +328,7 @@ db.collection.find({ qty: { $in: [ 5, 15 ] } });
 Returns all documents in which the field `qty` is equal to 5 **or** 15.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/in/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/in/)
 
 ---
@@ -347,6 +354,7 @@ db.collection.find({ price: { $not: { $gt: 1.99 } } });
 ```
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/not/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/not/)
 
 ---
@@ -360,6 +368,7 @@ db.collection.find({ $or: [{ qty: { $lt: 20 } }, { price: 10 }] });
 Executes a logical operator **OR** on an array of two or more query expressions, and returns the documents that satisfy *at least* one of them.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/or/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/or/)
 
 ---
@@ -390,6 +399,7 @@ db.collection.find({
 Executes a logical operator **AND** on an array of two or more expressions, and returns the documents that satisfy *all* of them.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/and/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/and/)
 
 ---
@@ -492,6 +502,7 @@ db.collection.update({ _id: 1 }, { $max: { highScore: 950 } });
 In the example above, if the current value is lower than 950 the $max will update the `highScore` field to 950. If it is already higher than 950, nothing will happen.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/meta/max/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/max/)
 
 ---
@@ -505,6 +516,7 @@ db.collection.update({ _id: 1 }, { $min: { lowScore: 150 } });
 In the example above, if the current value is higher than 150 the $min will update the `lowScore` field to 150. If it is already lower than 150, nothing will happen.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/update/min/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/min/)
 
 ---
@@ -545,6 +557,7 @@ db.collections.update(
 In the example above, $set adds the fields `quantity`, `details` and `tags` in the documents with `_id: 100`.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/update/set/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/set/)
 
 ---
@@ -561,6 +574,7 @@ db.collection.updateMany(
 In the example above, $unset deletes the field `quantity` in the documents with `productName: "Banana"`.
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/update/unset/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/unset/)
 
 ---
@@ -617,6 +631,7 @@ db.collection.updateOne(
 ```
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/update/addToSet/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/addToSet/)
 
 ---
@@ -770,6 +785,7 @@ $slice: 2
 ```
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/update/push/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/push/)
 
 ---
@@ -792,6 +808,7 @@ Slice the array in a specific index (Ex: slice: 2)
   - **Must** be used with **$each**
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/projection/slice/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/slice/)
 
 ---
@@ -858,6 +875,7 @@ db.products.find(
 ```
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/size/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/size/)
 
 ---
@@ -889,6 +907,7 @@ expr: { $gt: [ "$spent", "$budget" ] }
 ```
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/expr/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/exp/)
 
 ---
@@ -947,6 +966,7 @@ db.inventory.find({ qty: { $mod: [4, 0] } });
 ```
 
 [Documentation](https://docs.mongodb.com/manual/reference/operator/query/mod/)
+
 [Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/mod/)
 
 ---
