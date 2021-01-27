@@ -986,7 +986,7 @@ db.collection.aggregate([
 ### ADD FIELDS
 
 Expression: **$addFields**
-This arithmetic expression let you add new fields to the documentos but only into the query output.
+This arithmetic expression let you add new fields to the documents but only into the query output.
 
 ```javascript
 db.collection.aggregate([
