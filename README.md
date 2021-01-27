@@ -1,78 +1,80 @@
 # MongoDB Cheat Sheet
 
-* [**Filter Operators**](#filter-operators)
-  * [COUNT](#count)
-  * [DELETE](#delete)
-  * [EXISTS](#exists)
-  * [FIND](#find)
-  * [INSERT](#insert)
-  * [LIMIT](#limit)
-  * [SORT](#sort)
-* [**Comparison Operators**](#comparison-operators)
-  * [LESS THAN](#less-than)
-  * [LESS THAN OR EQUAL TO](#less-than-or-equal-to)
-  * [GREATER THAN](#greater-than)
-  * [GREATER THAN OR EQUAL TO](#greater-than-or-equal-to)
-  * [EQUAL TO](#equal-to)
-  * [NOT EQUAL TO](#not-equal-to)
-  * [IN](#in)
-  * [NOT IN](#not-in)
-* [**Logical Operators**](#logical-operators)
-  * [NOT](#not)
-  * [OR](#or)
-  * [NOR](#nor)
-  * [AND](#and)
-  * [AND OR](#and-or)
-* [**Modifying Documents**](#modifying-documents)
-  * [UPDATE ONE](#update-one)
-  * [MUL](#mul)
-  * [INC](#inc)
-  * [MAX](#max)
-  * [MIN](#min)
-  * [RENAME](#rename)
-  * [SET](#set)
-  * [UNSET](#unset)
-  * [CURRENT DATE](#current-date)
-* [**Array Operators**](#array-operators)
-  * [$ADD TO SET](#add-to-set)
-  * [$ARRAY FILTERS](#array-filters)
-  * [$POP](#pop)
-  * [$PULL](#pull)
-  * [$PUSH](#push)
-  * [$ALL](#all)
-  * [$ELEMMATCH](#elemmatch)
-  * [$SIZE](#size)
-* [**Array Modifiers**](#array-modifiers)
-  * [EACH](#each)
-  * [SLICE](#slice)
-  * [ARRAY SORT](#array-sort)
-  * [POSITION](#position)
-* [**Evaluation Operators**](#evaluation-operators)
-  * [$WHERE](#where)
-  * [$EXPR](#expr)
-  * [$REGEX](#regex)
-  * [$TEXT](#text)
-  * [$MOD](#mod)
-* [**Aggregation**](#aggregation)
-  * [Aggregation Pipeline](#aggregation-pipeline)
-* [**Aggregation Operators**](#aggregation-operators)
-  * [$MATCH](#match)
-  * [$LIMIT](#limit)
-  * [$LOOKUP](#lookup)
-    * [Equality Match](#equality-match)
-  * [$GROUP](#group)
-    * [List of most used accumulators](#list-of-most-used-accumulators)
-  * [$UNWIND](#unwind)
-  * [$PROJECT](#project)
-* [**Arithmetic Expressions**](#arithmatic-expressions)
-  * [$ABS](#abs)
-  * [$ADD FIELDS](#add_fields)
-  * [$ADD](#add)
-  * [$SUBTRACT](#subtract)
-  * [$CEIL](#ceil)
-  * [$FLOOR](#floor)
-  * [$DIVIDE](#divide)
-  * [$MULTIPLY](#multiply)
+- [MongoDB Cheat Sheet](#mongodb-cheat-sheet)
+  - [Filter Operators](#filter-operators)
+    - [COUNT](#count)
+    - [DELETE](#delete)
+    - [EXISTS](#exists)
+    - [FIND](#find)
+    - [INSERT](#insert)
+    - [LIMIT](#limit)
+    - [SORT](#sort)
+  - [Comparison Operators](#comparison-operators)
+    - [LESS THAN](#less-than)
+    - [LESS THAN OR EQUAL TO](#less-than-or-equal-to)
+    - [GREATER THAN](#greater-than)
+    - [GREATER THAN OR EQUAL TO](#greater-than-or-equal-to)
+    - [EQUAL TO](#equal-to)
+    - [NOT EQUAL TO](#not-equal-to)
+    - [IN](#in)
+    - [NOT IN](#not-in)
+  - [Logical Operators](#logical-operators)
+    - [NOT](#not)
+    - [OR](#or)
+    - [NOR](#nor)
+    - [AND](#and)
+    - [AND OR](#and-or)
+  - [MODIFYING DOCUMENTS](#modifying-documents)
+    - [UPDATE ONE](#update-one)
+    - [UPDATE MANY](#update-many)
+    - [MUL](#mul)
+    - [INC](#inc)
+    - [MAX](#max)
+    - [MIN](#min)
+    - [RENAME](#rename)
+    - [SET](#set)
+    - [UNSET](#unset)
+    - [CURRENT DATE](#current-date)
+  - [Array Operators](#array-operators)
+    - [ADD TO SET](#add-to-set)
+    - [ARRAY FILTERS](#array-filters)
+    - [POP](#pop)
+    - [PULL](#pull)
+    - [PUSH](#push)
+  - [Array Modifiers](#array-modifiers)
+    - [EACH](#each)
+    - [SLICE](#slice)
+    - [ARRAY SORT](#array-sort)
+    - [POSITION](#position)
+    - [$ALL](#all)
+    - [$ELEMMATCH](#elemmatch)
+    - [$SIZE](#size)
+  - [Evaluation Operators](#evaluation-operators)
+    - [WHERE](#where)
+    - [EXPR](#expr)
+    - [REGEX](#regex)
+    - [TEXT](#text)
+    - [MOD](#mod)
+  - [Aggregation](#aggregation)
+  - [Aggregation Pipeline](#aggregation-pipeline)
+  - [Aggregation Operators](#aggregation-operators)
+    - [MATCH](#match)
+    - [LIMIT](#limit-1)
+    - [LOOKUP](#lookup)
+      - [Equality Match](#equality-match)
+    - [GROUP](#group)
+      - [List of most used accumulators:](#list-of-most-used-accumulators)
+    - [UNWIND](#unwind)
+    - [PROJECT](#project)
+  - [Arithmetic Expressions](#arithmetic-expressions)
+    - [ABS](#abs)
+    - [ADD FIELDS](#add-fields)
+    - [ADD](#add)
+    - [SUBTRACT](#subtract)
+    - [CEIL](#ceil)
+    - [FLOOR](#floor)
+    - [DIVIDE](#divide)
+    - [MULTIPLY](#multiply)
 
 ---
 
@@ -685,7 +687,7 @@ db.products.find(
 
 ## Evaluation Operators
 
-### $WHERE
+### WHERE
 
 Use to pass either a string containing a JavaScript expression or a full JavaScript function.
 
@@ -693,7 +695,7 @@ Starting in MongoDB 3.6, the **$expr** operator allows the use of aggregation ex
 
 If you must create custom expressions, $function is preferred over **$where**.
 
-### $EXPR
+### EXPR
 
 Allows the use of [aggregation](#aggregation) expressions. It compares fields from **the same** document.
 
@@ -705,7 +707,7 @@ expr: { $gt: [ "$spent", "$budget" ] }
 );
 ```
 
-### $REGEX
+### REGEX
 
 Provides regular expression capabilities for pattern matching strings.
 
@@ -717,14 +719,14 @@ db.products.find({ sku: { $regex: /789$/ } });
 db.products.find({ sku: { $regex: /^ABC/i } });
 ```
 
-### $TEXT
+### TEXT
 
 Performs a text search on the content of the fields indexed with a text index.
 
 
 ```javascript
 {
-  text:
+  $text:
   {
     search: <string>,
     language: <string>,
@@ -742,7 +744,7 @@ Performs a text search on the content of the fields indexed with a text index.
 
 `$diacriticSensitive`: boolean flag to enable or disable diacritic sensitive. Defaults to **false**
 
-### $MOD
+### MOD
 
 Select documents where the value of a field divided by a divisor has the specified remainder.
 
@@ -760,7 +762,7 @@ The aggregation pipeline is a framework for MongoDB. Documents enter a multi-sta
 
 ## Aggregation Operators
 
-### $MATCH
+### MATCH
 
 ````javascript
 db.collection.aggregate([
@@ -786,7 +788,7 @@ This operator may be used at any stage of the pipeline. When used as the first s
 
 ---
 
-### $LIMIT
+### LIMIT
 
 ```` javascript
 db.collection.aggregate([
@@ -807,7 +809,7 @@ Returns the first five results that matches the specified condition from the pre
 
 ---
 
-### $LOOKUP
+### LOOKUP
 
 This operator allows the use of documents from another collection (table), similar to a **JOIN** from the SQL. The documents from the joined collection will be avaible through a new array.
 
@@ -845,7 +847,7 @@ db.collection.aggregate([
 
 ----
 
-### $GROUP
+### GROUP
 
 This operator groups documents by the specified `_id` expression. It's worth mentioning that the specified `_id` is actually a "parameter" of `$group` and is not to be mistaken with `_id` from the collections. The operator `_id` is required. If you specify a value of `null` the $group stage calculates accumulated values for the input document as a whole.
 
@@ -896,7 +898,7 @@ The output would be something like this:
 
 ---
 
-### $UNWIND
+### UNWIND
 
 ````javascript
 db.collection.aggregate([
@@ -935,7 +937,7 @@ We would get following output:
 
 ---
 
-### $PROJECT
+### PROJECT
 
 ````javascript
 db.collection.aggregate([
