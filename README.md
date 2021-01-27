@@ -412,7 +412,7 @@ In the example above, $rename will update the `name` field to `productName` in a
 Add one or more fields.
 
 ```javascript
-db.products.update(
+db.collections.update(
   { _id: 100 },
   { $set: {
       quantity: 500,
