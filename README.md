@@ -46,9 +46,9 @@
     - [SLICE](#slice)
     - [ARRAY SORT](#array-sort)
     - [POSITION](#position)
-    - [$ALL](#all)
-    - [$ELEMMATCH](#elemmatch)
-    - [$SIZE](#size)
+    - [ALL](#all)
+    - [ELEMMATCH](#elemmatch)
+    - [SIZE](#size)
   - [Evaluation Operators](#evaluation-operators)
     - [WHERE](#where)
     - [EXPR](#expr)
@@ -88,6 +88,8 @@ db.collection.count();
 
 This method counts and returns the number of results that match a query.
 
+---
+
 ### DELETE
 
 ``` javascript
@@ -105,6 +107,7 @@ Delete **all** documents that match a specified filter.
 ``` javascript
 db.collection.deleteMany( {} );
 ```
+---
 
 ### EXISTS
 
@@ -121,6 +124,8 @@ The query returns the documents that contain the field `qty`, including document
 db.collection.find({ qty: { $exists: false } });
 ```
 The query returns only the documents that do not contain the field `qty`.
+
+---
 
 ### FIND
 
@@ -142,6 +147,8 @@ db.collection.find({ releaseYear: "2021" }, { title: 1, author: 1, _id: 0 });
 
 Returns all documents that match the query, and display only the `title` and `author`.
 
+---
+
 ### INSERT
 
 ``` javascript
@@ -162,6 +169,8 @@ db.collection.insertMany([ { chave: "Valor", chave2: "Valor2" }, { chave: "Valor
 
 Insert more than one document in a collection.
 
+---
+
 ### LIMIT
 
 ``` javascript
@@ -180,6 +189,8 @@ db.collection.find({}).limit(10).skip(5);
 ```
 
 Return ten results, skipping the first five documents, from the collection.
+
+---
 
 ### SORT
 
@@ -203,6 +214,8 @@ db.collection.find({ qty: { $lt: 20 } });
 ```
 Returns all documents in which the field `qty` is less than 20.
 
+---
+
 ### LESS THAN OR EQUAL TO
 
 ``` javascript
@@ -210,6 +223,8 @@ db.collection.find({ qty: { $lte: 20 } });
 ```
 
 Returns all documents in which the field `qty` is less than or equal 20.
+
+---
 
 ### GREATER THAN
 
@@ -219,6 +234,8 @@ db.collection.find({ qty: { $gt: 20 } });
 
 Returns all documents in which the field `qty` is greater than 20.
 
+---
+
 ### GREATER THAN OR EQUAL TO
 
 ``` javascript
@@ -227,6 +244,7 @@ db.collection.find({ qty: { $gte: 20 } });
 
 Returns all documents in which the field `qty` is greater than or equal 20.
 
+---
 
 ### EQUAL TO
 
@@ -237,6 +255,7 @@ db.collection.find({ qty: 20 });
 
 Returns all documents in which the field `qty` is equal to 20.
 
+---
 
 ### NOT EQUAL TO
 
@@ -246,6 +265,7 @@ db.collection.find({ qty: { $ne: 20 } });
 
 Returns all documents in which the field `qty` is not equal to 20.
 
+---
 
 ### IN
 
@@ -255,6 +275,7 @@ db.collection.find({ qty: { $in: [ 5, 15 ] } });
 
 Returns all documents in which the field `qty` is equal to 5 **or** 15.
 
+---
 
 ### NOT IN
 
@@ -263,7 +284,6 @@ db.collection.find({ qty: { $in: [ 5, 15 ] } });
 ```
 
 Returns all documents in which the field `qty` is not equal to 5 **neither** 15. It also returns documents in which the field `qty` does not exist.
-
 
 ---
 
@@ -275,6 +295,8 @@ Returns all documents in which the field `qty` is not equal to 5 **neither** 15.
 db.collection.find({ price: { $not: { $gt: 1.99 } } });
 ```
 
+---
+
 ### OR
 
 ``` javascript
@@ -283,6 +305,8 @@ db.collection.find({ $or: [{ qty: { $lt: 20 } }, { price: 10 }] });
 
 Executes a logical operator **OR** on an array of two or more query expressions, and returns the documents that satisfy *at least* one of them.
 
+---
+
 ### NOR
 
 ```javascript
@@ -290,6 +314,8 @@ db.collection.find({ $nor: [{ price: 1.99 }, { sale: true }] });
 ```
 
 Executes a logical operator **NOR** on an array of two or more query expressions, and returns the documents that fail *at least* one of them.
+
+---
 
 ### AND
 
@@ -303,6 +329,8 @@ db.collection.find({
 ```
 
 Executes a logical operator **AND** on an array of two or more expressions, and returns the documents that satisfy *all* of them.
+
+---
 
 ### AND OR
 
@@ -345,6 +373,7 @@ db.collection.updateOne(
 )
 ```
 
+---
 
 ### UPDATE MANY
 
@@ -358,6 +387,8 @@ db.collection.updateMany(
 )
 ```
 
+---
+
 ### MUL
 
 Multiply the value of a field by a number, updating the document. If the field does not exist, $mul creates it and sets the value to zero.
@@ -369,6 +400,8 @@ db.collection.updateOne(
 )
 ```
 
+---
+
 ### INC
 Increments (positive number) or decrements (negative number) a field by a specified value. If the field does not exist, $inc creates the field and sets the field to the specified value.
 
@@ -379,6 +412,8 @@ db.collection.updateOne(
 );
 ```
 
+---
+
 ### MAX
 The $max sets the upper limit of a field. It compares the specified value with the field's value. If the current value is lower than the specified value, the document will be updated. Otherwise the field's value won't be changed.
 
@@ -387,6 +422,8 @@ db.collection.update({ _id: 1 }, { $max: { highScore: 950 } });
 ```
 In the example above, if the current value is lower than 950 the $max will update the `highScore` field to 950. If it is already higher than 950, nothing will happen.
 
+---
+
 ### MIN
 The $min sets the lower limit of a field. It compares the specified value with the field's value. If the current value is greater than the specified value, the document will be updated. Otherwise the field's value won't be changed.
 
@@ -394,6 +431,8 @@ The $min sets the lower limit of a field. It compares the specified value with t
 db.collection.update({ _id: 1 }, { $min: { lowScore: 150 } });
 ```
 In the example above, if the current value is higher than 150 the $min will update the `lowScore` field to 150. If it is already lower than 150, nothing will happen.
+
+---
 
 ### RENAME
 Update the name of a field.
@@ -409,6 +448,8 @@ db.collection.updateMany([
 );
 ```
 In the example above, $rename will update the `name` field to `productName` in all documents.
+
+---
 
 ### SET
 Add one or more fields.
@@ -426,6 +467,8 @@ db.collections.update(
 ```
 In the example above, $set adds the fields `quantity`, `details` and `tags` in the documents with `_id: 100`.
 
+---
+
 ### UNSET
 Remove one or more fields.
 
@@ -436,6 +479,8 @@ db.collection.updateMany(
 );
 ```
 In the example above, $unset deletes the field `quantity` in the documents with `productName: "Banana"`.
+
+---
 
 ### CURRENT DATE
 Set the value of a field to the current date, either as a Date or a timestamp. 
@@ -486,6 +531,8 @@ db.collection.updateOne(
 );
 ```
 
+---
+
 ### ARRAY FILTERS
 
 ``` javascript
@@ -500,6 +547,8 @@ db.collection.updateMany(
 );
 ```
 
+---
+
 ### POP
 
 ```javascript
@@ -511,6 +560,8 @@ Removes the first item of an array in the field `items`.
 db.collection.update({ _id: 1 }, { $pop: { items: 1 } });
 ```
 Removes the last item of an array in the field `items`.
+
+---
 
 ### PULL
 
@@ -550,6 +601,8 @@ pull: {
   }
 );
 ```
+
+---
 
 ### PUSH
 
@@ -630,11 +683,15 @@ $slice: 2
 Modifier: **$each**
 Add multiple values into an Array
 
+---
+
 ### SLICE
 
 Modifier: **$slice**
 Slice the array in a specific index (Ex: slice: 2)
   - **Must** be used with **$each**
+
+---
 
 ### ARRAY SORT
 
@@ -643,6 +700,8 @@ Sort items into the array.
   - Ascending order (Ex: sort: { key: 1 })
   - Descending order (Ex: sort: { key: -1 })
   - **Must** be used with **$each**
+
+---
 
 ### POSITION
 
@@ -653,7 +712,7 @@ Insert item into a specific index
 
 ---
 
-### $ALL
+### ALL
 
 Selects the documents where the value of a field is an array that contains all the specified elements.
 
@@ -663,7 +722,9 @@ db.inventory.find(
 );
 ```
 
-### $ELEMMATCH
+---
+
+### ELEMMATCH
 
 Select documents that contain an array field with at least one element that matches all the specified filters.
 
@@ -673,7 +734,9 @@ db.collection.find(
 );
 ```
 
-### $SIZE
+---
+
+### SIZE
 
 Select documents that match any array with the number of elements specified by the argument.
 
@@ -695,6 +758,8 @@ Starting in MongoDB 3.6, the **$expr** operator allows the use of aggregation ex
 
 If you must create custom expressions, $function is preferred over **$where**.
 
+---
+
 ### EXPR
 
 Allows the use of [aggregation](#aggregation) expressions. It compares fields from **the same** document.
@@ -707,6 +772,8 @@ expr: { $gt: [ "$spent", "$budget" ] }
 );
 ```
 
+---
+
 ### REGEX
 
 Provides regular expression capabilities for pattern matching strings.
@@ -718,6 +785,8 @@ db.products.find({ sku: { $regex: /789$/ } });
 ``` javascript
 db.products.find({ sku: { $regex: /^ABC/i } });
 ```
+
+---
 
 ### TEXT
 
@@ -744,6 +813,8 @@ Performs a text search on the content of the fields indexed with a text index.
 
 `$diacriticSensitive`: boolean flag to enable or disable diacritic sensitive. Defaults to **false**
 
+---
+
 ### MOD
 
 Select documents where the value of a field divided by a divisor has the specified remainder.
@@ -751,6 +822,8 @@ Select documents where the value of a field divided by a divisor has the specifi
 ```javascript
 db.inventory.find({ qty: { $mod: [4, 0] } });
 ```
+
+---
 
 ## Aggregation
 
@@ -966,6 +1039,8 @@ db.collection.aggregate([
 ]);
 ````
 
+---
+
 ## Arithmetic Expressions
 
 ### ABS
@@ -984,6 +1059,7 @@ db.collection.aggregate([
   }
 ]);
 ```
+---
 
 ### ADD FIELDS
 
@@ -1008,6 +1084,8 @@ db.collection.aggregate([
 ]);
 ```
 
+---
+
 ### ADD
 
 Expression: **$add**
@@ -1018,6 +1096,8 @@ db.collection.aggregate([
   { $project: { item: 1, total: { $add: ["$price", "$fee"] } } }
 ]);
 ```
+
+---
 
 ### SUBTRACT
 
@@ -1040,6 +1120,8 @@ db.collection.aggregate([
 ]);
 ```
 
+---
+
 ### CEIL
 
 Expression: **$ceil**
@@ -1051,6 +1133,8 @@ db.collection.aggregate([
 ]);
 ```
 
+---
+
 ### FLOOR
 
 Expression: **$floor**
@@ -1061,6 +1145,8 @@ db.collection.aggregate([
   { $project: { value: 1, floorValue: { $floor: "$value" } } }
 ]);
 ```
+
+---
 
 ### DIVIDE
 
@@ -1080,6 +1166,8 @@ db.collection.aggregate([
 ]);
 ```
 
+---
+
 ### MULTIPLY
 
 Expression: **$multiply**
@@ -1098,3 +1186,4 @@ db.collection.aggregate([
   }
 ]);
 ```
+---
