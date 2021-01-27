@@ -25,7 +25,14 @@
   * [AND OR](#and-or)
 * [**Modifying Documents**](#modifying-documents)
   * [UPDATE ONE](#update-one)
-  * [UPDATE MANY](#update-many)
+  * [MUL](#mul)
+  * [INC](#inc)
+  * [MAX](#max)
+  * [MIN](#min)
+  * [RENAME](#rename)
+  * [SET](#set)
+  * [UNSET](#unset)
+  * [CURRENT DATE](#current-date)
 * [**Array Operators**](#array-operators)
   * [$ADD TO SET](#add-to-set)
   * [$ARRAY FILTERS](#array-filters)
@@ -47,6 +54,25 @@
   * [$TEXT](#text)
   * [$MOD](#mod)
 * [**Aggregation**](#aggregation)
+  * [Aggregation Pipeline](#aggregation-pipeline)
+* [**Aggregation Operators**](#aggregation-operators)
+  * [$MATCH](#match)
+  * [$LIMIT](#limit)
+  * [$LOOKUP](#lookup)
+    * [Equality Match](#equality-match)
+  * [$GROUP](#group)
+    * [List of most used accumulators](#list-of-most-used-accumulators)
+  * [$UNWIND](#unwind)
+  * [$PROJECT](#project)
+* [**Arithmetic Expressions**](#arithmatic-expressions)
+  * [$ABS](#abs)
+  * [$ADD FIELDS](#add_fields)
+  * [$ADD](#add)
+  * [$SUBTRACT](#subtract)
+  * [$CEIL](#ceil)
+  * [$FLOOR](#floor)
+  * [$DIVIDE](#divide)
+  * [$MULTIPLY](#multiply)
 
 ---
 
@@ -382,6 +408,22 @@ db.collection.updateMany([
 ```
 In the example above, $rename will update the `name` field to `productName` in all documents.
 
+### SET
+Add one or more fields.
+
+```javascript
+db.collections.update(
+  { _id: 100 },
+  { $set: {
+      quantity: 500,
+      details: { model: "14Q3", make: "xyz" },
+      tags: [ "coats", "outerwear", "clothing" ]
+    }
+  }
+);
+```
+In the example above, $set adds the fields `quantity`, `details` and `tags` in the documents with `_id: 100`.
+
 ### UNSET
 Remove one or more fields.
 
@@ -469,6 +511,8 @@ db.collection.update({ _id: 1 }, { $pop: { items: 1 } });
 Removes the last item of an array in the field `items`.
 
 ### PULL
+
+Removes items of an array if the item match the query condition.
 
 ```javascript
 db.collection.updateMany(
@@ -622,7 +666,7 @@ db.inventory.find(
 Select documents that contain an array field with at least one element that matches all the specified filters.
 
 ``` javascript
-db.scores.find(
+db.collection.find(
   { results: { $elemMatch: { $gte: 80, $lt: 85 } } }
 );
 ```
@@ -710,9 +754,7 @@ db.inventory.find({ qty: { $mod: [4, 0] } });
 
 Aggregation expressions use **field path** to access fields in the input documents. To specify a field path, prefix the field name with a dollar sign $.
 
-
-
-# Aggregation Pipeline
+## Aggregation Pipeline
 
 The aggregation pipeline is a framework for MongoDB. Documents enter a multi-stage pipeline that transforms the documents into an aggregated result. Documents pass through the stages in sequence. Each stage transforms the documents as they pass from one stage to another. 
 
@@ -921,3 +963,136 @@ db.collection.aggregate([
     },
 ]);
 ````
+
+## Arithmetic Expressions
+
+### ABS
+
+Expression: **$abs**
+This arithmetic expression returns the absolute value of a number.
+
+```javascript
+db.collection.aggregate([
+  {
+    project: {
+      delta: {
+        abs: { $subtract: ["$start", "$end"] }
+      }
+    }
+  }
+]);
+```
+
+### ADD FIELDS
+
+Expression: **$addFields**
+This arithmetic expression let you add new fields to the documents but only into the query output.
+
+```javascript
+db.collection.aggregate([
+  {
+    $addFields: {
+      totalHomework: { $sum: "$homework" } ,
+      totalQuiz: { $sum: "$quiz" }
+    }
+  },
+  {
+    $addFields: {
+      totalScore: {
+        $add: [ "$totalHomework", "$totalQuiz", "$extraCredit" ]
+      }
+    }
+  }
+]);
+```
+
+### ADD
+
+Expression: **$add**
+This arithmetic expression let you sum field values.
+
+```javascript
+db.collection.aggregate([
+  { $project: { item: 1, total: { $add: ["$price", "$fee"] } } }
+]);
+```
+
+### SUBTRACT
+
+Expression: **$subtract**
+This arithmetic expression let you subtract field values.
+
+```javascript
+db.collection.aggregate([
+  {
+    $project: {
+      item: 1,
+      total: {
+        $subtract: [
+          { $add: ["$price", "$fee"] },
+          "$discount"
+        ]
+      }
+    }
+  }
+]);
+```
+
+### CEIL
+
+Expression: **$ceil**
+This arithmetic expression returns the smallest integer that is greater than or equal to the field value.
+
+```javascript
+db.collection.aggregate([
+  { $project: { value: 1, ceilingValue: { $ceil: "$value" } } }
+]);
+```
+
+### FLOOR
+
+Expression: **$floor**
+This arithmetic expression returns the smallest integer that is lower than or equal to the field value.
+
+```javascript
+db.collection.aggregate([
+  { $project: { value: 1, floorValue: { $floor: "$value" } } }
+]);
+```
+
+### DIVIDE
+
+Expression: **$divide**
+This arithmetic expression returns the result of a division between fields.
+
+```javascript
+db.collection.aggregate([
+  {
+    project: {
+      name: 1,
+      workdays: {
+        divide: ["$hours", 8]
+      }
+    }
+  }
+]);
+```
+
+### MULTIPLY
+
+Expression: **$multiply**
+This arithmetic expression returns the result of a multiplication between fields.
+
+```javascript
+db.collection.aggregate([
+  {
+    project: {
+      date: 1,
+      item: 1,
+      total: {
+        multiply: ["$price", "$quantity"]
+      }
+    }
+  }
+]);
+```
