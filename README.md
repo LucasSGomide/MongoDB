@@ -1,78 +1,81 @@
 # MongoDB Cheat Sheet
 
-* [**Filter Operators**](#filter-operators)
-  * [COUNT](#count)
-  * [DELETE](#delete)
-  * [EXISTS](#exists)
-  * [FIND](#find)
-  * [INSERT](#insert)
-  * [LIMIT](#limit)
-  * [SORT](#sort)
-* [**Comparison Operators**](#comparison-operators)
-  * [LESS THAN](#less-than)
-  * [LESS THAN OR EQUAL TO](#less-than-or-equal-to)
-  * [GREATER THAN](#greater-than)
-  * [GREATER THAN OR EQUAL TO](#greater-than-or-equal-to)
-  * [EQUAL TO](#equal-to)
-  * [NOT EQUAL TO](#not-equal-to)
-  * [IN](#in)
-  * [NOT IN](#not-in)
-* [**Logical Operators**](#logical-operators)
-  * [NOT](#not)
-  * [OR](#or)
-  * [NOR](#nor)
-  * [AND](#and)
-  * [AND OR](#and-or)
-* [**Modifying Documents**](#modifying-documents)
-  * [UPDATE ONE](#update-one)
-  * [MUL](#mul)
-  * [INC](#inc)
-  * [MAX](#max)
-  * [MIN](#min)
-  * [RENAME](#rename)
-  * [SET](#set)
-  * [UNSET](#unset)
-  * [CURRENT DATE](#current-date)
-* [**Array Operators**](#array-operators)
-  * [$ADD TO SET](#add-to-set)
-  * [$ARRAY FILTERS](#array-filters)
-  * [$POP](#pop)
-  * [$PULL](#pull)
-  * [$PUSH](#push)
-  * [$ALL](#all)
-  * [$ELEMMATCH](#elemmatch)
-  * [$SIZE](#size)
-* [**Array Modifiers**](#array-modifiers)
-  * [EACH](#each)
-  * [SLICE](#slice)
-  * [ARRAY SORT](#array-sort)
-  * [POSITION](#position)
-* [**Evaluation Operators**](#evaluation-operators)
-  * [$WHERE](#where)
-  * [$EXPR](#expr)
-  * [$REGEX](#regex)
-  * [$TEXT](#text)
-  * [$MOD](#mod)
-* [**Aggregation**](#aggregation)
-  * [Aggregation Pipeline](#aggregation-pipeline)
-* [**Aggregation Operators**](#aggregation-operators)
-  * [$MATCH](#match)
-  * [$LIMIT](#limit)
-  * [$LOOKUP](#lookup)
-    * [Equality Match](#equality-match)
-  * [$GROUP](#group)
-    * [List of most used accumulators](#list-of-most-used-accumulators)
-  * [$UNWIND](#unwind)
-  * [$PROJECT](#project)
-* [**Arithmetic Expressions**](#arithmatic-expressions)
-  * [$ABS](#abs)
-  * [$ADD FIELDS](#add_fields)
-  * [$ADD](#add)
-  * [$SUBTRACT](#subtract)
-  * [$CEIL](#ceil)
-  * [$FLOOR](#floor)
-  * [$DIVIDE](#divide)
-  * [$MULTIPLY](#multiply)
+- [MongoDB Cheat Sheet](#mongodb-cheat-sheet)
+  - [Filter Operators](#filter-operators)
+    - [COUNT](#count)
+    - [DELETE](#delete)
+    - [EXISTS](#exists)
+    - [FIND](#find)
+    - [INSERT](#insert)
+    - [LIMIT](#limit)
+    - [SKIP](#skip)
+    - [SORT](#sort)
+  - [Comparison Operators](#comparison-operators)
+    - [LESS THAN](#less-than)
+    - [LESS THAN OR EQUAL TO](#less-than-or-equal-to)
+    - [GREATER THAN](#greater-than)
+    - [GREATER THAN OR EQUAL TO](#greater-than-or-equal-to)
+    - [EQUAL TO](#equal-to)
+    - [NOT EQUAL TO](#not-equal-to)
+    - [IN](#in)
+    - [NOT IN](#not-in)
+  - [Logical Operators](#logical-operators)
+    - [NOT](#not)
+    - [OR](#or)
+    - [NOR](#nor)
+    - [AND](#and)
+    - [AND OR](#and-or)
+  - [MODIFYING DOCUMENTS](#modifying-documents)
+    - [UPDATE ONE](#update-one)
+    - [UPDATE MANY](#update-many)
+    - [MUL](#mul)
+    - [INC](#inc)
+    - [MAX](#max)
+    - [MIN](#min)
+    - [RENAME](#rename)
+    - [SET](#set)
+    - [UNSET](#unset)
+    - [CURRENT DATE](#current-date)
+  - [Array Operators](#array-operators)
+    - [ADD TO SET](#add-to-set)
+    - [ARRAY FILTERS](#array-filters)
+    - [POP](#pop)
+    - [PULL](#pull)
+    - [PUSH](#push)
+  - [Array Modifiers](#array-modifiers)
+    - [EACH](#each)
+    - [SLICE](#slice)
+    - [ARRAY SORT](#array-sort)
+    - [POSITION](#position)
+    - [ALL](#all)
+    - [ELEMMATCH](#elemmatch)
+    - [SIZE](#size)
+  - [Evaluation Operators](#evaluation-operators)
+    - [WHERE](#where)
+    - [EXPR](#expr)
+    - [REGEX](#regex)
+    - [TEXT](#text)
+    - [MOD](#mod)
+  - [Aggregation](#aggregation)
+  - [Aggregation Pipeline](#aggregation-pipeline)
+  - [Aggregation Operators](#aggregation-operators)
+    - [MATCH](#match)
+    - [LIMIT](#limit-1)
+    - [LOOKUP](#lookup)
+      - [Equality Match](#equality-match)
+    - [GROUP](#group)
+      - [List of most used accumulators:](#list-of-most-used-accumulators)
+    - [UNWIND](#unwind)
+    - [PROJECT](#project)
+  - [Arithmetic Expressions](#arithmetic-expressions)
+    - [ABS](#abs)
+    - [ADD FIELDS](#add-fields)
+    - [ADD](#add)
+    - [SUBTRACT](#subtract)
+    - [CEIL](#ceil)
+    - [FLOOR](#floor)
+    - [DIVIDE](#divide)
+    - [MULTIPLY](#multiply)
 
 ---
 
@@ -86,6 +89,10 @@ db.collection.count();
 
 This method counts and returns the number of results that match a query.
 
+[Documentation](https://docs.mongodb.com/manual/reference/method/db.collection.count/)
+
+---
+
 ### DELETE
 
 ``` javascript
@@ -93,6 +100,8 @@ db.collection.deleteOne({ status: "D" });
 ```
 
 Delete **the first** document that match a specified filter.
+
+[Documentation](https://docs.mongodb.com/manual/reference/method/db.collection.deleteOne/)
 
 ``` javascript
 db.collection.deleteMany({ status : "A" });
@@ -103,6 +112,10 @@ Delete **all** documents that match a specified filter.
 ``` javascript
 db.collection.deleteMany( {} );
 ```
+
+[Documentation](https://docs.mongodb.com/manual/reference/method/db.collection.deleteMany/)
+
+---
 
 ### EXISTS
 
@@ -119,6 +132,10 @@ The query returns the documents that contain the field `qty`, including document
 db.collection.find({ qty: { $exists: false } });
 ```
 The query returns only the documents that do not contain the field `qty`.
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/exists/)
+
+---
 
 ### FIND
 
@@ -140,6 +157,10 @@ db.collection.find({ releaseYear: "2021" }, { title: 1, author: 1, _id: 0 });
 
 Returns all documents that match the query, and display only the `title` and `author`.
 
+[Documentation](https://docs.mongodb.com/manual/reference/method/db.collection.find/)
+
+---
+
 ### INSERT
 
 ``` javascript
@@ -148,17 +169,25 @@ db.createCollection( "minhaColecao4", { collation: { locale: "fr" } } );
 
 Create a new collection.
 
+[Documentation](https://docs.mongodb.com/manual/reference/method/db.createCollection/)
+
 ```javascript
 db.collection.insertOne({ chave: "Valor", chave2: "Valor2" });
 ```
 
 Insert only one document in the collection. If the collection doesn't exist, mongodb automatically creates it.
 
+[Documentation](https://docs.mongodb.com/manual/reference/method/db.collection.insertOne/)
+
 ```javascript
 db.collection.insertMany([ { chave: "Valor", chave2: "Valor2" }, { chave: "Valor", chave2: "Valor2" } ]);
 ```
 
 Insert more than one document in a collection.
+
+[Documentation](https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/)
+
+---
 
 ### LIMIT
 
@@ -167,17 +196,27 @@ db.collection.find("<query>").limit("<número>");
 ```
 Specify the number of documents to be returned.
 
+[Documentation](https://docs.mongodb.com/manual/reference/method/cursor.limit/)
+
+---
+
+### SKIP
+
 ```javascript
 db.collection.find().skip(2); 
 ```
 
 Specify the number of documents to be skipped. It controls where mongodb will begin to return results.
 
+[Documentation](https://docs.mongodb.com/manual/reference/method/cursor.skip/)
+
 ```javascript
 db.collection.find({}).limit(10).skip(5);
 ```
 
 Return ten results, skipping the first five documents, from the collection.
+
+---
 
 ### SORT
 
@@ -191,6 +230,8 @@ db.collection.find({}).sort({ "price": 1 });
 
 Sort the field `price` in ascending order for all documents in a collection. 
 
+[Documentation](https://docs.mongodb.com/manual/reference/method/cursor.sort/)
+
 ---
 
 ## Comparison Operators
@@ -201,6 +242,12 @@ db.collection.find({ qty: { $lt: 20 } });
 ```
 Returns all documents in which the field `qty` is less than 20.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/lt/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/lt/)
+
+---
+
 ### LESS THAN OR EQUAL TO
 
 ``` javascript
@@ -208,6 +255,12 @@ db.collection.find({ qty: { $lte: 20 } });
 ```
 
 Returns all documents in which the field `qty` is less than or equal 20.
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/lte/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/lte/)
+
+---
 
 ### GREATER THAN
 
@@ -217,6 +270,12 @@ db.collection.find({ qty: { $gt: 20 } });
 
 Returns all documents in which the field `qty` is greater than 20.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/gt/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/gt/)
+
+---
+
 ### GREATER THAN OR EQUAL TO
 
 ``` javascript
@@ -225,6 +284,11 @@ db.collection.find({ qty: { $gte: 20 } });
 
 Returns all documents in which the field `qty` is greater than or equal 20.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/gte/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/gte/)
+
+---
 
 ### EQUAL TO
 
@@ -235,6 +299,11 @@ db.collection.find({ qty: 20 });
 
 Returns all documents in which the field `qty` is equal to 20.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/eq/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/eq/)
+
+---
 
 ### NOT EQUAL TO
 
@@ -244,6 +313,11 @@ db.collection.find({ qty: { $ne: 20 } });
 
 Returns all documents in which the field `qty` is not equal to 20.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/ne/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/ne/)
+
+---
 
 ### IN
 
@@ -253,15 +327,21 @@ db.collection.find({ qty: { $in: [ 5, 15 ] } });
 
 Returns all documents in which the field `qty` is equal to 5 **or** 15.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/in/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/in/)
+
+---
 
 ### NOT IN
 
 ``` javascript
-db.collection.find({ qty: { $in: [ 5, 15 ] } });
+db.collection.find({ qty: { $nin: [ 5, 15 ] } });
 ```
 
 Returns all documents in which the field `qty` is not equal to 5 **neither** 15. It also returns documents in which the field `qty` does not exist.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/nin/)
 
 ---
 
@@ -273,6 +353,12 @@ Returns all documents in which the field `qty` is not equal to 5 **neither** 15.
 db.collection.find({ price: { $not: { $gt: 1.99 } } });
 ```
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/not/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/not/)
+
+---
+
 ### OR
 
 ``` javascript
@@ -281,6 +367,12 @@ db.collection.find({ $or: [{ qty: { $lt: 20 } }, { price: 10 }] });
 
 Executes a logical operator **OR** on an array of two or more query expressions, and returns the documents that satisfy *at least* one of them.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/or/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/or/)
+
+---
+
 ### NOR
 
 ```javascript
@@ -288,6 +380,10 @@ db.collection.find({ $nor: [{ price: 1.99 }, { sale: true }] });
 ```
 
 Executes a logical operator **NOR** on an array of two or more query expressions, and returns the documents that fail *at least* one of them.
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/nor/)
+
+---
 
 ### AND
 
@@ -301,6 +397,12 @@ db.collection.find({
 ```
 
 Executes a logical operator **AND** on an array of two or more expressions, and returns the documents that satisfy *all* of them.
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/and/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/and/)
+
+---
 
 ### AND OR
 
@@ -342,7 +444,9 @@ db.collection.updateOne(
   { $upsert: true }
 )
 ```
+[Documentation](https://docs.mongodb.com/manual/reference/method/db.collection.updateOne/)
 
+---
 
 ### UPDATE MANY
 
@@ -356,6 +460,10 @@ db.collection.updateMany(
 )
 ```
 
+[Documentation](https://docs.mongodb.com/manual/reference/method/db.collection.updateMany/)
+
+---
+
 ### MUL
 
 Multiply the value of a field by a number, updating the document. If the field does not exist, $mul creates it and sets the value to zero.
@@ -367,6 +475,10 @@ db.collection.updateOne(
 )
 ```
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/mul/)
+
+---
+
 ### INC
 Increments (positive number) or decrements (negative number) a field by a specified value. If the field does not exist, $inc creates the field and sets the field to the specified value.
 
@@ -377,6 +489,10 @@ db.collection.updateOne(
 );
 ```
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/inc/)
+
+---
+
 ### MAX
 The $max sets the upper limit of a field. It compares the specified value with the field's value. If the current value is lower than the specified value, the document will be updated. Otherwise the field's value won't be changed.
 
@@ -385,6 +501,12 @@ db.collection.update({ _id: 1 }, { $max: { highScore: 950 } });
 ```
 In the example above, if the current value is lower than 950 the $max will update the `highScore` field to 950. If it is already higher than 950, nothing will happen.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/meta/max/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/max/)
+
+---
+
 ### MIN
 The $min sets the lower limit of a field. It compares the specified value with the field's value. If the current value is greater than the specified value, the document will be updated. Otherwise the field's value won't be changed.
 
@@ -392,6 +514,12 @@ The $min sets the lower limit of a field. It compares the specified value with t
 db.collection.update({ _id: 1 }, { $min: { lowScore: 150 } });
 ```
 In the example above, if the current value is higher than 150 the $min will update the `lowScore` field to 150. If it is already lower than 150, nothing will happen.
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/min/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/min/)
+
+---
 
 ### RENAME
 Update the name of a field.
@@ -407,6 +535,10 @@ db.collection.updateMany([
 );
 ```
 In the example above, $rename will update the `name` field to `productName` in all documents.
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/rename/)
+
+---
 
 ### SET
 Add one or more fields.
@@ -424,6 +556,12 @@ db.collections.update(
 ```
 In the example above, $set adds the fields `quantity`, `details` and `tags` in the documents with `_id: 100`.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/set/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/set/)
+
+---
+
 ### UNSET
 Remove one or more fields.
 
@@ -434,6 +572,12 @@ db.collection.updateMany(
 );
 ```
 In the example above, $unset deletes the field `quantity` in the documents with `productName: "Banana"`.
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/unset/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/unset/)
+
+---
 
 ### CURRENT DATE
 Set the value of a field to the current date, either as a Date or a timestamp. 
@@ -454,6 +598,8 @@ db.customers.updateOne(
 )
 ```
 The example above updates the lastModified field to the current date, the "cancellation.date" field to the current timestamp as well as updating the status field to "D" and the "cancellation.reason" to "user request".
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/currentDate/)
 
 ---
 
@@ -484,6 +630,12 @@ db.collection.updateOne(
 );
 ```
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/addToSet/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/addToSet/)
+
+---
+
 ### ARRAY FILTERS
 
 ``` javascript
@@ -498,6 +650,10 @@ db.collection.updateMany(
 );
 ```
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/positional-filtered/)
+
+---
+
 ### POP
 
 ```javascript
@@ -509,6 +665,10 @@ Removes the first item of an array in the field `items`.
 db.collection.update({ _id: 1 }, { $pop: { items: 1 } });
 ```
 Removes the last item of an array in the field `items`.
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/pop/)
+
+---
 
 ### PULL
 
@@ -548,6 +708,10 @@ pull: {
   }
 );
 ```
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/pull/)
+
+---
 
 ### PUSH
 
@@ -619,6 +783,11 @@ $slice: 2
   { upsert: true }
 );
 ```
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/push/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/push/)
+
 ---
 
 ## Array Modifiers
@@ -628,19 +797,33 @@ $slice: 2
 Modifier: **$each**
 Add multiple values into an Array
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/each/)
+
+---
+
 ### SLICE
 
 Modifier: **$slice**
 Slice the array in a specific index (Ex: slice: 2)
   - **Must** be used with **$each**
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/projection/slice/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/slice/)
+
+---
+
 ### ARRAY SORT
 
 Modifier: **$sort**
 Sort items into the array.
-  - Ascending order (Ex: sort: { key: 1 })
-  - Descending order (Ex: sort: { key: -1 })
+  - Ascending order (Ex: $sort: { key: 1 })
+  - Descending order (Ex: $sort: { key: -1 })
   - **Must** be used with **$each**
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/sort/)
+
+---
 
 ### POSITION
 
@@ -649,9 +832,11 @@ Insert item into a specific index
   - Without it the new item will be inserted at the last position in the array
   - **Must** be used with **$each**
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/update/position/)
+
 ---
 
-### $ALL
+### ALL
 
 Selects the documents where the value of a field is an array that contains all the specified elements.
 
@@ -661,7 +846,11 @@ db.inventory.find(
 );
 ```
 
-### $ELEMMATCH
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/all/)
+
+---
+
+### ELEMMATCH
 
 Select documents that contain an array field with at least one element that matches all the specified filters.
 
@@ -671,7 +860,11 @@ db.collection.find(
 );
 ```
 
-### $SIZE
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/elemMatch/)
+
+---
+
+### SIZE
 
 Select documents that match any array with the number of elements specified by the argument.
 
@@ -681,11 +874,15 @@ db.products.find(
 );
 ```
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/size/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/size/)
+
 ---
 
 ## Evaluation Operators
 
-### $WHERE
+### WHERE
 
 Use to pass either a string containing a JavaScript expression or a full JavaScript function.
 
@@ -693,7 +890,11 @@ Starting in MongoDB 3.6, the **$expr** operator allows the use of aggregation ex
 
 If you must create custom expressions, $function is preferred over **$where**.
 
-### $EXPR
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/where/)
+
+---
+
+### EXPR
 
 Allows the use of [aggregation](#aggregation) expressions. It compares fields from **the same** document.
 
@@ -705,7 +906,13 @@ expr: { $gt: [ "$spent", "$budget" ] }
 );
 ```
 
-### $REGEX
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/expr/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/exp/)
+
+---
+
+### REGEX
 
 Provides regular expression capabilities for pattern matching strings.
 
@@ -717,14 +924,18 @@ db.products.find({ sku: { $regex: /789$/ } });
 db.products.find({ sku: { $regex: /^ABC/i } });
 ```
 
-### $TEXT
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/regex/)
+
+---
+
+### TEXT
 
 Performs a text search on the content of the fields indexed with a text index.
 
 
 ```javascript
 {
-  text:
+  $text:
   {
     search: <string>,
     language: <string>,
@@ -742,13 +953,23 @@ Performs a text search on the content of the fields indexed with a text index.
 
 `$diacriticSensitive`: boolean flag to enable or disable diacritic sensitive. Defaults to **false**
 
-### $MOD
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/text/)
+
+---
+
+### MOD
 
 Select documents where the value of a field divided by a divisor has the specified remainder.
 
 ```javascript
 db.inventory.find({ qty: { $mod: [4, 0] } });
 ```
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/query/mod/)
+
+[Documentation (aggregation)](https://docs.mongodb.com/manual/reference/operator/aggregation/mod/)
+
+---
 
 ## Aggregation
 
@@ -760,7 +981,7 @@ The aggregation pipeline is a framework for MongoDB. Documents enter a multi-sta
 
 ## Aggregation Operators
 
-### $MATCH
+### MATCH
 
 ````javascript
 db.collection.aggregate([
@@ -784,9 +1005,11 @@ Select all documents that match the query.
 
 This operator may be used at any stage of the pipeline. When used as the first stage, it should improve considerably the performace of your query. In the other hand, when used at any other point, it will act similar to a **HAVING** from the SQL.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/match/)
+
 ---
 
-### $LIMIT
+### LIMIT
 
 ```` javascript
 db.collection.aggregate([
@@ -805,9 +1028,11 @@ db.collection.aggregate([
 
 Returns the first five results that matches the specified condition from the previous stage.
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/limit/)
+
 ---
 
-### $LOOKUP
+### LOOKUP
 
 This operator allows the use of documents from another collection (table), similar to a **JOIN** from the SQL. The documents from the joined collection will be avaible through a new array.
 
@@ -843,9 +1068,11 @@ db.collection.aggregate([
 ]);
 ````
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/)
+
 ----
 
-### $GROUP
+### GROUP
 
 This operator groups documents by the specified `_id` expression. It's worth mentioning that the specified `_id` is actually a "parameter" of `$group` and is not to be mistaken with `_id` from the collections. The operator `_id` is required. If you specify a value of `null` the $group stage calculates accumulated values for the input document as a whole.
 
@@ -884,6 +1111,7 @@ The output would be something like this:
 { _id : "Lamp", count : 2 }
 ````
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/group/)
 
 #### List of most used accumulators:
 
@@ -896,7 +1124,7 @@ The output would be something like this:
 
 ---
 
-### $UNWIND
+### UNWIND
 
 ````javascript
 db.collection.aggregate([
@@ -933,9 +1161,11 @@ We would get following output:
 { _id: 7, name: "GMusicApp", subscription: "university" },
 ````
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/unwind/)
+
 ---
 
-### $PROJECT
+### PROJECT
 
 ````javascript
 db.collection.aggregate([
@@ -964,6 +1194,10 @@ db.collection.aggregate([
 ]);
 ````
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/project/)
+
+---
+
 ## Arithmetic Expressions
 
 ### ABS
@@ -982,6 +1216,10 @@ db.collection.aggregate([
   }
 ]);
 ```
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/abs/)
+
+---
 
 ### ADD FIELDS
 
@@ -1006,6 +1244,10 @@ db.collection.aggregate([
 ]);
 ```
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/addFields/)
+
+---
+
 ### ADD
 
 Expression: **$add**
@@ -1016,6 +1258,10 @@ db.collection.aggregate([
   { $project: { item: 1, total: { $add: ["$price", "$fee"] } } }
 ]);
 ```
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/add/)
+
+---
 
 ### SUBTRACT
 
@@ -1038,6 +1284,10 @@ db.collection.aggregate([
 ]);
 ```
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/subtract/)
+
+---
+
 ### CEIL
 
 Expression: **$ceil**
@@ -1048,6 +1298,10 @@ db.collection.aggregate([
   { $project: { value: 1, ceilingValue: { $ceil: "$value" } } }
 ]);
 ```
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/ceil/)
+
+---
 
 ### FLOOR
 
@@ -1060,6 +1314,10 @@ db.collection.aggregate([
 ]);
 ```
 
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/floor/)
+
+---
+
 ### DIVIDE
 
 Expression: **$divide**
@@ -1071,12 +1329,16 @@ db.collection.aggregate([
     project: {
       name: 1,
       workdays: {
-        divide: ["$hours", 8]
+        $divide: ["$hours", 8]
       }
     }
   }
 ]);
 ```
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/divide/)
+
+---
 
 ### MULTIPLY
 
@@ -1090,9 +1352,13 @@ db.collection.aggregate([
       date: 1,
       item: 1,
       total: {
-        multiply: ["$price", "$quantity"]
+        $multiply: ["$price", "$quantity"]
       }
     }
   }
 ]);
 ```
+
+[Documentation](https://docs.mongodb.com/manual/reference/operator/aggregation/multiply/)
+
+---
