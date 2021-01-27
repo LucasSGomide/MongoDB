@@ -1060,7 +1060,7 @@ db.collection.aggregate([
 ]);
 ```
 
-### DEVIDE
+### DIVIDE
 
 Expression: **$devide**
 This arithmetic expression returns the result of a division between fields.
